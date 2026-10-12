@@ -6,8 +6,8 @@ Aplicação web responsiva para registrar receitas e despesas, acompanhar o sald
 
 ## Demonstração
 
-- **Aplicação online:** `[ADICIONE_AQUI_O_LINK_DO_DEPLOY](https://alexjn21.github.io/fincontrol/)`
-- **Repositório:** `[ADICIONE_AQUI_O_LINK_DO_GITHUB](https://github.com/AlexJN21/fincontrol)`
+- **Aplicação online:** `(https://alexjn21.github.io/fincontrol/)`
+- **Repositório:** `(https://github.com/AlexJN21/fincontrol)`
 - **Captura de tela:** adicione uma imagem da aplicação em `assets/fincontrol-preview.png` e descomente a linha abaixo.
 
 <!-- ![Prévia do FinControl](assets/fincontrol-preview.png) -->
