@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FinControl: controle simples de receitas, despesas e orçamento pessoal.">
+  <title>FinControl — Controle financeiro pessoal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="FinControl, página inicial">
+        <span class="brand-mark">F</span><span>Fin<span class="brand-light">Control</span></span>
+      </a>
+      <p class="nav-label">MENU PRINCIPAL</p>
+      <nav class="side-nav" aria-label="Navegação principal">
+        <a class="nav-link active" href="#dashboard"><span class="nav-icon">▦</span> Visão geral</a>
+        <a class="nav-link" href="#transactions"><span class="nav-icon">↕</span> Transações</a>
+        <a class="nav-link" href="#budget"><span class="nav-icon">◎</span> Orçamento</a>
+      </nav>
+      <div class="sidebar-tip">
+        <span class="tip-icon">✦</span>
+        <h3>Pequenos passos, grandes resultados.</h3>
+        <p>Acompanhe seus gastos e tome decisões com mais clareza.</p>
+      </div>
+      <div class="sidebar-bottom"><span class="status-dot"></span> Seus dados ficam neste dispositivo</div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">SEU DINHEIRO, SOB CONTROLE</p>
+          <h1>Visão geral</h1>
+          <p class="subheading">Acompanhe sua vida financeira em um só lugar.</p>
+        </div>
+        <div class="top-actions">
+          <span class="today" id="today-label"></span>
+          <button class="button button-primary" id="open-modal"><span>＋</span> Nova transação</button>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="Resumo financeiro">
+        <article class="summary-card balance-card">
+          <div class="summary-top"><span>Saldo atual</span><span class="summary-icon">◈</span></div>
+          <p class="summary-value" id="balance">R$ 0,00</p>
+          <p class="summary-note"><span class="mini-dot"></span> Receitas menos despesas</p>
+        </article>
+        <article class="summary-card">
+          <div class="summary-top"><span>Receitas do mês</span><span class="summary-icon income-icon">↗</span></div>
+          <p class="summary-value" id="income-total">R$ 0,00</p>
+          <p class="summary-note">Dinheiro que entrou</p>
+        </article>
+        <article class="summary-card">
+          <div class="summary-top"><span>Despesas do mês</span><span class="summary-icon expense-icon">↘</span></div>
+          <p class="summary-value" id="expense-total">R$ 0,00</p>
+          <p class="summary-note">Dinheiro que saiu</p>
+        </article>
+        <article class="summary-card">
+          <div class="summary-top"><span>Economia do mês</span><span class="summary-icon savings-icon">％</span></div>
+          <p class="summary-value" id="savings-rate">0%</p>
+          <p class="summary-note">Receitas menos despesas</p>
+        </article>
+      </section>
+
+      <section class="panel opening-balance-panel" aria-labelledby="opening-balance-title">
+        <div class="opening-balance-copy"><span class="opening-balance-icon">◎</span><div><h2 id="opening-balance-title">Saldo inicial</h2><p>Informe quanto dinheiro você já tem disponível antes de começar a registrar os gastos.</p></div></div>
+        <form id="opening-balance-form" class="opening-balance-form"><label class="sr-only" for="opening-balance-input">Saldo inicial em reais</label><span class="currency-prefix">R$</span><input id="opening-balance-input" type="number" min="0" step="0.01" placeholder="0,00" inputmode="decimal" required><button class="button button-primary" type="submit">Salvar saldo</button></form>
+        <p id="opening-balance-status" class="opening-balance-status" aria-live="polite">Nenhum saldo inicial configurado.</p>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel transactions-panel" id="transactions">
+          <div class="panel-heading">
+            <div><h2>Transações recentes</h2><p>Veja para onde seu dinheiro está indo.</p></div>
+            <button class="text-button" id="show-all">Ver todas <span>→</span></button>
+          </div>
+          <div class="filters">
+            <label class="search-box"><span>⌕</span><input id="search-input" type="search" placeholder="Buscar transação..." aria-label="Buscar transação"></label>
+            <select id="type-filter" aria-label="Filtrar por tipo"><option value="all">Todos os tipos</option><option value="income">Receitas</option><option value="expense">Despesas</option></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Descrição</th><th>Categoria</th><th>Data</th><th class="align-right">Valor</th><th><span class="sr-only">Ações</span></th></tr></thead>
+              <tbody id="transactions-body"></tbody>
+            </table>
+            <div class="empty-state" id="empty-state"><span class="empty-icon">↕</span><h3>Nenhuma transação por aqui</h3><p>Adicione sua primeira receita ou despesa para começar.</p><button class="button button-outline" id="empty-add">＋ Adicionar transação</button></div>
+          </div>
+        </article>
+
+        <article class="panel budget-panel" id="budget">
+          <div class="panel-heading"><div><h2>Despesas por categoria</h2><p>Distribuição deste mês.</p></div><span class="panel-icon">◔</span></div>
+          <div id="category-breakdown" class="category-breakdown"></div>
+          <div class="budget-footer"><span>Total de despesas</span><strong id="category-total">R$ 0,00</strong></div>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel insight-panel">
+          <div class="insight-symbol">✦</div>
+          <div><h2>Uma dica para você</h2><p id="financial-tip">Registre suas movimentações com frequência. Pequenos hábitos ajudam a enxergar melhor seu dinheiro.</p></div>
+        </article>
+        <article class="panel month-panel">
+          <div><h2>Seu mês</h2><p id="month-summary">Adicione transações para ver o resumo do mês.</p></div>
+          <div class="month-visual" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </article>
+      </section>
+      <footer class="footer"><span>FinControl <span class="footer-dot">•</span> Controle financeiro pessoal</span><span>Feito para organizar, planejar e evoluir.</span></footer>
+    </main>
+  </div>
+
+  <dialog id="transaction-modal" class="transaction-modal">
+    <form id="transaction-form" method="dialog">
+      <div class="modal-heading"><div><p class="eyebrow">MOVIMENTAÇÃO FINANCEIRA</p><h2 id="modal-title">Nova transação</h2></div><button type="button" class="close-button" id="close-modal" aria-label="Fechar">×</button></div>
+      <input type="hidden" id="transaction-id">
+      <div class="field-group"><label>Tipo de transação</label><div class="type-toggle"><label><input type="radio" name="type" value="expense" checked><span>↘ Despesa</span></label><label><input type="radio" name="type" value="income"><span>↗ Receita</span></label></div></div>
+      <div class="field-group"><label for="description">Descrição</label><input id="description" name="description" maxlength="70" placeholder="Ex.: Conta de internet" required></div>
+      <div class="form-row">
+        <div class="field-group"><label for="amount">Valor (R$)</label><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0,00" required></div>
+        <div class="field-group"><label for="date">Data</label><input id="date" name="date" type="date" required></div>
+      </div>
+      <div class="field-group"><label for="category">Categoria</label><select id="category" name="category" required></select></div>
+      <div class="field-group"><label for="notes">Observação (opcional)</label><textarea id="notes" name="notes" rows="2" maxlength="180" placeholder="Algum detalhe que queira guardar..."></textarea></div>
+      <p class="form-error" id="form-error" role="alert"></p>
+      <div class="modal-actions"><button type="button" class="button button-outline" id="cancel-modal">Cancelar</button><button type="submit" class="button button-primary">Salvar transação</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
